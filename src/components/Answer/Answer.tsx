@@ -1,11 +1,12 @@
-import { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form"
 
 
 export const Answer = forwardRef(({ nestIndex, control, register, errors }, ref) => {
   useImperativeHandle(ref, () => ({
     addAnswer() {
-      append({ field1: "field1" })
+      //append({ field1: "field1" })
+      insert(counter+1, { field1: "field1" })
       //insert(fields.length, { field1: "field1" })
     },
   })) 
@@ -15,16 +16,23 @@ export const Answer = forwardRef(({ nestIndex, control, register, errors }, ref)
     name: `questions[${nestIndex}].answers`
   });
 
+  const [counter, setCounter] = useState(0)
+
+  useEffect(()=> {
+    setCounter(fields.length)
+  },[fields])
+
   return (
     <div>
       <div style={{ marginLeft: 10, borderLeft: "2px solid red" }}>
-        {nestIndex}
+        # fields: {counter}
         {fields.map((item, k) => {
           return (
             <div
               key={item.id}
               style={{ height: "50px", display: "flex", marginLeft: 10 }}
             >
+              {/* {item.id} */}
               <input 
                 type="number"
                 name={`questions[${nestIndex}].answers[${k}].field1`}
