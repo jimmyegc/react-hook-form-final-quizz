@@ -68,12 +68,7 @@ export const Quizz = () => {
 
   return (<>
     <FormProvider {...methods}>      
-      <div className="d-flex align-items-center justify-content-between">
-        <h4>Creación de cuestionario:</h4>
-        {/* <button type="button" className="btn btn-sm btn-primary" onClick={handleAddQuestion}>
-          +Pregunta
-        </button> */}
-      </div>    
+       
       <form onSubmit={methods.handleSubmit(onSubmit)}>
 
         <Question 

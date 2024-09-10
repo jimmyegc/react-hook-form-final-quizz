@@ -1,16 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form"
+import { Collapsible } from "../Collapsible/Collapsible";
 
 
-export const Answer = forwardRef(({ nestIndex, control, register, errors }, ref) => {
-  useImperativeHandle(ref, () => ({
-    addAnswer() {
-      //append({ field1: "field1" })
-      insert(counter+1, { field1: "field1" })
-      //insert(fields.length, { field1: "field1" })
-    },
-  })) 
-
+export const Answer = ({ nestIndex, onDeleteQuestion, control, register, errors }) => {  
   const { fields, remove, append, insert } = useFieldArray({
     control,
     name: `questions[${nestIndex}].answers`
@@ -18,13 +11,33 @@ export const Answer = forwardRef(({ nestIndex, control, register, errors }, ref)
 
   const [counter, setCounter] = useState(0)
 
+  const addAnswer = () => {
+    append({ field1: "field1" })
+  }
+
   useEffect(()=> {
     setCounter(fields.length)
   },[fields])
 
-  return (
-    <div>
-      <div style={{ marginLeft: 10, borderLeft: "2px solid red" }}>
+  return (<>
+  
+  <Collapsible
+            open
+            title={<>
+            
+            <input type="text"
+          name={`questions[${nestIndex}].name`}
+                {...register(`questions[${nestIndex}].name`, { required: { value: true, message: "Requerido" } }) }
+              />
+
+<button type="button" onClick={() => addAnswer()}>+Answer</button>
+
+<button type="button" onClick={onDeleteQuestion}>
+  Delete Question
+</button>
+            </>}              
+          >                  
+              <div style={{ marginLeft: 10, borderLeft: "2px solid red" }}>
         # fields: {counter}
         {fields.map((item, k) => {
           return (
@@ -62,19 +75,29 @@ export const Answer = forwardRef(({ nestIndex, control, register, errors }, ref)
           );
         })}
 
-        <button
+        {/* <button
           type="button"
           onClick={() => append({ field1: "field1" })}
           style={{ marginLeft: "10px" }}
         >
           Append Nested
-        </button>
+        </button> */}
       </div>
+          </Collapsible>  
+
+
+          <div>
+      
+
+    
 
       <hr />
     </div>
+
+  </>
+    
   );
-})
+}
 
 /*
 interface AnswerProps {

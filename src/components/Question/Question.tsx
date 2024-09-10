@@ -12,37 +12,38 @@ interface QuestionProps {
   */
 
 export const Question = ({ control, register, defaultValues, errors }) => {
-  const childCompRef = useRef<any>()
-
+  
   const { fields: questions, append, remove } = useFieldArray({
     control,
     name: "questions"
   });
 
-  return (
-    <div
+
+  return (<>
+    <div className="d-flex align-items-center justify-content-between">
+        <h4>Creación de cuestionario:</h4>
+        <button
+        type="button"
+        onClick={() => {
+          append({ name: "Pregunta" });
+        }}
+      >
+        +Pregunta
+      </button>
+      </div>   
+      <div
       className="p-2 d-flex align-items-center justify-content-between"
     >
+     
       
       <ul>
         {questions.map((item, index) => {
           return (
             <li key={item.id}>
-
-              <input type="text"
-                name={`questions[${index}].name`}
-                {...register(`questions[${index}].name`, { required: { value: true, message: "Requerido" } }) }
-              />
-
-              <button type="button" onClick={() => childCompRef.current.addAnswer()}>+Answer</button>
-
-              <button type="button" onClick={() => remove(index)}>
-                Delete
-              </button>
-
+                          
               <Answer 
-                nestIndex={index}
-                ref={childCompRef} 
+                nestIndex={index}            
+                onDeleteQuestion={()=> remove(index)}    
                 {...{ control, register, errors }}
               />
 
@@ -56,14 +57,7 @@ export const Question = ({ control, register, defaultValues, errors }) => {
         })}
       </ul>
 
-      <button
-        type="button"
-        onClick={() => {
-          append({ name: "Pregunta" });
-        }}
-      >
-        +Pregunta
-      </button>
+      
 
       {/* <div className="w-75">      
         <input 
@@ -84,5 +78,7 @@ export const Question = ({ control, register, defaultValues, errors }) => {
         >X</button>
       </div>       */}
     </div>
+  </>
+   
   )
 }
