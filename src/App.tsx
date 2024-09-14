@@ -5,8 +5,8 @@ function App() {
   
   return (<>      
     <div className="container mx-auto">     
-      {/* <Quizz /> */}
-      <DragAndDropContainer />
+      {/* <Quizz /> 
+      <DragAndDropContainer />*/}
     </div>      
   </>)
 }
