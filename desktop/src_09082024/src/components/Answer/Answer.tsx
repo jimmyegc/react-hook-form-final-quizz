@@ -1,105 +1,6 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form"
-import { Collapsible } from "../Collapsible/Collapsible";
 
-
-export const Answer = ({ nestIndex, onDeleteQuestion, control, register, errors }) => {  
-  const { fields, remove, append, insert } = useFieldArray({
-    control,
-    name: `questions[${nestIndex}].answers`
-  });
-
-  const [counter, setCounter] = useState(0)
-
-  const addAnswer = () => {
-    append({ field1: "field1" })
-  }
-
-  useEffect(()=> {
-    setCounter(fields.length)
-  },[fields])
-
-  return (<>
-  
-  <Collapsible
-            open
-            title={<>
-            
-            <input type="text"
-          name={`questions[${nestIndex}].name`}
-                {...register(`questions[${nestIndex}].name`, { required: { value: true, message: "Requerido" } }) }
-              />
-
-<button type="button" onClick={() => addAnswer()}>+Answer</button>
-
-<button type="button" onClick={onDeleteQuestion}>
-  Delete Question
-</button>
-            </>}              
-          >                  
-              <div style={{ marginLeft: 10, borderLeft: "2px solid red" }}>
-        # fields: {counter}
-        {fields.map((item, k) => {
-          return (
-            <div
-              key={k}
-              style={{ height: "50px", display: "flex", marginLeft: 10 }}
-            >
-              {/* {item.id} */}
-              <input 
-                type="number"
-                name={`questions[${nestIndex}].answers[${k}].field1`}
-                {...register(`questions[${nestIndex}].answers[${k}].field1`, {
-                  required: { value: true, message: "Required" },
-                  min: { value: 0, message: "Min: 0" }
-                })}
-              />
-              {/* <Input
-                type="number"
-                name={`test[${nestIndex}].nestedArray[${k}].field1`}
-                register={register({
-                  required: { value: true, message: "Required" },
-                  min: { value: 0, message: "Min: 0" }
-                })}
-                defaultValue={item.field1}
-                style={{ marginRight: "25px" }}
-              /> */}
-              <button
-                type="button"
-                onClick={() => remove(k)}
-                style={{ height: "40px", marginTop: 0 }}
-              >
-                Delete
-              </button>
-            </div>
-          );
-        })}
-
-        {/* <button
-          type="button"
-          onClick={() => append({ field1: "field1" })}
-          style={{ marginLeft: "10px" }}
-        >
-          Append Nested
-        </button> */}
-      </div>
-          </Collapsible>  
-
-
-          <div>
-      
-
-    
-
-      <hr />
-    </div>
-
-  </>
-    
-  );
-}
-
-/*
 interface AnswerProps {
   index: number   
 } 
@@ -191,7 +92,8 @@ export const Answer = forwardRef(({ index }: AnswerProps, ref) => {
             <div className="d-flex align-items-center">
                       
             </div>                 
-            <div className="d-flex align-items-center">             
+            <div className="d-flex align-items-center">
+             {/*   */}
             </div>
           </div>              
           
@@ -200,5 +102,3 @@ export const Answer = forwardRef(({ index }: AnswerProps, ref) => {
     ))}    
   </>)
 })
-
-*/
